@@ -1,0 +1,11 @@
+{
+    "name": "yoanfilipe/planning-formation",
+  "autoload": {
+    "psr-4": {
+      "Calendar\\":"src/Calendar",
+      "App\\":"src/App"
+    }
+  },
+    "require": {}
+
+}
