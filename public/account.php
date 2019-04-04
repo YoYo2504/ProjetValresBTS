@@ -1,7 +1,7 @@
 <?php session_start();
 require 'functions.php';
 require '../src/bootstrap.php';
-require_once 'bdd.php';
+//require_once 'bdd.php';
 logged_only();
 if(!empty($_POST)){
     if(!empty($_POST['password']) || $_POST['password'] != $_POST['password_confirm']){

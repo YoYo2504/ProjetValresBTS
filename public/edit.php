@@ -1,6 +1,6 @@
 <?php
 require '../src/bootstrap.php';
-require_once 'bdd.php';
+//require_once 'bdd.php';
 
 $pdo = get_pdo();
 $event = new Calendar\Events($pdo);
@@ -46,9 +46,13 @@ render('header', ['title'=> $event->getDescriptionName]);
     <div class="container">
         <form action="" method="post"class="form">
             <?php render('calendar/form', ['data'=> $data, 'errors'=> $errors]); ?>
-            <div class="form-group">
-                <button class="btn btn-primary">Modifier la réservation</button>
-            </div>
+            <?php
+            //if(isset($_SESSION['auth'])):?>
+                <div class="form-group">
+                    <button class="btn btn-primary">Modifier la réservation</button>
+                    <button class="btn btn-primary">Supprimer la réservation</button>
+                </div>
+            <?//endif;?>
         </form>
     </div>
 <?php render('footer');?>

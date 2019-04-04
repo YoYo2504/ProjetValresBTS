@@ -1,6 +1,6 @@
 <?php
 require '../src/bootstrap.php';
-require_once 'bdd.php';
+//require_once 'bdd.php';
 
 $pdo = get_pdo();
 $events = new Calendar\Events($pdo);

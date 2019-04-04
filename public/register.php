@@ -1,6 +1,6 @@
 <?php
 require_once  'functions.php';
-require_once 'bdd.php';
+//require_once 'bdd.php';
 session_start();
 if(!empty($_POST)){
     require_once '../src/db.php';
@@ -34,13 +34,13 @@ if(!empty($_POST)){
 
     if(empty($errors)){
 
-        $req = $pdo2->prepare("INSERT INTO utilisateur SET username = ?, password = ?, email = ?, confirmation_token =?");
+        $req = $pdo2->prepare('INSERT INTO utilisateur SET username = ?, password = ?, email = ?, confirmation_token =?');
         $token = str_random(60);
 
         $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
         $req->execute([$_POST['username'], $password, $_POST['email'], $token]);
         $user_id= $pdo2->lastInsertId();
-        //              ⚠️⚠️⚠️⚠️⚠️⚠️⚠️                                                                                                              changer le lien par la suite
+        //              ⚠️⚠️⚠️⚠️⚠️⚠️⚠️       ------------> regarde plus loin                                                                     changer le lien par la suite
         mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte merci de cliquer sur ce lien\n\n http://localhost:8000/account.php?id=$user_id&token=$token");
         $_SESSION['flash']['success'] = 'Un email de confirmation vous a été envoyé pour valider votre compte';
         header('Location: login.php');
@@ -48,7 +48,7 @@ if(!empty($_POST)){
     }
 
 
-    debug($errors);
+    //debug($errors);
 }
 ?>
 <?php require '../src/bootstrap.php';

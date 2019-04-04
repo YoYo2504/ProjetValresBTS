@@ -1,7 +1,7 @@
 <?php
 class database{
 
-/*
+
     const SERVER = '127.0.0.1';
     const NAME ='planningFormation';
     const USERNAME = 'root';
@@ -17,15 +17,15 @@ class database{
         }catch (Exception $ex){
             echo 'Exception reçue : ',  $ex->getMessage(), "\n";
         }
-    }*/
+    }
 // AVANT
-    private $pdo2;
+   /* private $pdo2;
 
     public function __construct($login, $password, $database_name, $host = 'localhost'){
         $this->pdo2 = new PDO("mysql:dbname=$database_name; host =  $host",$login, $password);
         $this->pdo2 -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->pdo2->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_OBJ);
-    }
+    }*/
 
     /**
      * @param $query

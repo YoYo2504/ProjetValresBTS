@@ -11,20 +11,12 @@ class ComposerStaticInit10143024ce1ef8acf09404303693180c
         array (
             'Calendar\\' => 9,
         ),
-        'A' => 
-        array (
-            'App\\' => 4,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'Calendar\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/Calendar',
-        ),
-        'App\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src/App',
         ),
     );
 

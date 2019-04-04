@@ -7,10 +7,11 @@ class  EventValidator extends Validator {
      * @return array bool
      */
     public function validates(array $data){
-        parent::validates($data);
+        parent::validates(array data);
         $this->validates('name', 'minLength', 3);
         $this->validates('date', 'date');
         $this->validates('start', 'beforeTime', 'end');
+        $this->validates('end', 'afterTime', 'start');
         return $this->errors;
     }
 }

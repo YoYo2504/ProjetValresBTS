@@ -1,7 +1,7 @@
 <?php
 require '../views/header.php';
 require '../src/bootstrap.php';
-require_once 'bdd.php';
+//require_once 'bdd.php';
 if(!isset($_POST) && !empty($_POST['email'])){
     require_once '../src/db.php';
     $req = $pdo2-> prepare('SELECT * FROM utilisateur WHERE email= ? AND confirmed_ad IS NOT NULL ');

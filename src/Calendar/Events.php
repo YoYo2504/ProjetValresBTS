@@ -1,7 +1,9 @@
 <?php
 namespace Calendar;
 require_once '/Users/yoanfilipe/PhpstormProjects/PlanningFormation/src/bootstrap.php';
+//require_once '../bootstrap.php';
 use Couchbase\Exception;
+use PDO;
 
 
 class Events {
@@ -14,10 +16,11 @@ class Events {
     }
 
 
-const SERVER = '192.168.12.34';
-const NAME ='planningFormation';
-const USERNAME = 'root';
-const PASS='YoYo250497';
+const SERVER = '127.0.0.1';
+const NAME ='ProjetValres';
+const USERNAME = 'epsi';
+const PASS='rootroot';
+const PORT='3302';
 
     /**
      * Récupère les évènement commençant entre 2 dates
@@ -26,22 +29,18 @@ const PASS='YoYo250497';
      * @return array
      */
     public function getEventsBetween (\DateTimeInterface $start, \DateTimeInterface $end): array {
-        //$dsn = 'mysql:dbname=' . NAME . ';host=' . SERVER;
-        //echo $dsn;
-        //die();
         try{
-            $pdo = new \PDO( 'mysql:dbname=' . NAME . ';host=' . SERVER,USERNAME, PASS);
-            $pdo ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            //PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-            $pdo ->query('SET CHARACTER SET UTF8');
-            $pdo->query('SET NAMES UTF8');
-        }  catch(Exception $ex){
-            echo 'Exception reçue 2222222 : ',  $ex->getMessage(), "\n";
+            $PDO = new PDO('mysql:dbname=' . NAME . ';host=' . SERVER .';port='.PORT,USERNAME, PASS);
+            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            //PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC;
+            $PDO->query('SET CHARACTER SET UTF8');
+            $PDO->query('SET NAMES UTF8');
+        }catch (Exception $ex){
+            echo 'Exception reçue : ',  $ex->getMessage(), "\n";
         }
-        $sql = "SELECT * FROM Events WHERE startEvent BETWEEN {$start->format('Y-m-d 00:00:00')} 
-AND {$end->format('Y-m-d 23:59:59')} ORDER BY startEvent ASC";
-        var_dump($sql);
-        $statement = $this->pdo->query($sql);
+        $sql = "SELECT * FROM Events WHERE startEvent BETWEEN '{$start->format('Y-m-d 00:00:00')}' AND '{$end->format('Y-m-d 23:59:59')}' ORDER BY startEvent ASC";
+        //var_dump($sql);
+        $statement = $PDO->query($sql);
         $results =$statement->fetchAll();
         return $results;
     }
@@ -92,8 +91,8 @@ AND {$end->format('Y-m-d 23:59:59')} ORDER BY startEvent ASC";
      * @return Event
      * @throws \Exception
      */
-    public function  find (int $id): Event {
-        require './Event.php';
+    public function find (int $id): Event {
+        require 'Event.php';
         $statement = $this->pdo->query("SELECT * FROM Events WHERE id = $id LIMIT 1");
         $statement->setFetchMode(PDO::FETCH_CLASS, \Calendar\Event::class);
         $result= $statement->fetch();
@@ -153,6 +152,13 @@ AND {$end->format('Y-m-d 23:59:59')} ORDER BY startEvent ASC";
      * @return bool
      */
     public function delete(Event $event):bool{
-
+        $statement = $this->pdo->prepare('DELETE FROM events WHERE descriptionName = ?, description = ?, startEvent = ?, endEvent = ? id =?');
+        $statement->execute([
+            $event->getDescriptionName(),
+            $event->getDescription(),
+            $event->getStartEvent()->format('Y-m-d H-i-s'),
+            $event->getEndEvent()->format('Y-m-d H-i-s'),
+            $event->getId()
+        ]);
     }
 }

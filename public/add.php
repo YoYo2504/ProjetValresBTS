@@ -1,13 +1,16 @@
 <?php
 require '../src/bootstrap.php';
-require_once 'bdd.php';
+require_once '../src/App/Validator.php';
+//require_once 'bdd.php';
+render('header',['title'=>'Ajouter un évènement']);
 
 $data =[
     'date'  => $_GET['date'] ?? date('Y-m-d'),
     'start' => date('H:i'),
     'end'   => date('H:i')
 ];
-$validator = new App\Validator($data);
+
+$validator = new \App\Validator($data);
 if(!$validator->validate('date', 'date')){
     $data['date'] = date('Y-m-d');
 };
@@ -15,7 +18,7 @@ $errors = [];
 if($_SERVER['REQUEST_METHOD']==='POST'){
     $data = $_POST;
     $errors = [];
-    $validator = new Calendar\EventValidator();
+    $validator = new \Calendar\EventValidator();
     $errors = $validator->validates($_POST);
     if(empty($errors)){
         $event = new \Calendar\Events(get_pdo());
@@ -23,10 +26,9 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         $event->create($event);
         header('Location: /index?success=1');
         exit();
-        dd($errors);
+        //dd($errors);
     }
 }
-render('header',['title'=>'Ajouter un évènement']);
 ?>
 
 <div class="container">
@@ -39,9 +41,16 @@ render('header',['title'=>'Ajouter un évènement']);
 
     <form action="" method="post"class="form">
         <?php render('calendar/form', ['data'=> $data, 'errors'=> $errors]); ?>
+        <?php if(isset($_SESSION['auth'])):?>
         <div class="form-group">
             <button class="btn btn-primary">Ajouter la réservation</button>
         </div>
+        <?php else :?>
+            <div class="alert alert-danger">
+                Merci de vous connecter pour ajouter une réservation
+            </div>
+        <?endif;?>
+
     </form>
 </div>
 

@@ -14,8 +14,8 @@ class Validator{
      * @param array $data
      * @return array bool
      */
-    public function validates(array $data){
-        $this->errors = [];
+    public function validates(array $data) {
+        $this->errors = array();
         $this->data =$data;
         return $this->errors;
     }

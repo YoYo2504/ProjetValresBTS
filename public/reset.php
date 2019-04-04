@@ -1,7 +1,7 @@
 <?php
 require '../views/header.php';
 require '../src/bootstrap.php';
-require_once 'bdd.php';
+//require_once 'bdd.php';
 if(isset($_GET['id']) && isset($_GET['token'])){
     require '../src/db.php';
     $req = $pdo2->prepare('SELECT * FROM utilisateur WHERE id = ? AND reset_token IS NOT NULL reset_token = ? AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)');

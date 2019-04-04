@@ -17,7 +17,7 @@ function dd(...$vars){
 }
 
 define('SERVER', '127.0.0.1');
-define('NAME', 'test');
+define('NAME', 'ProjetValres');
 define('USERNAME', 'epsi');
 define('PASS', 'rootroot');
 define('PORT', 3302);

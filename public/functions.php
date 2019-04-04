@@ -5,7 +5,10 @@ function debug($variable){
 
 function str_random($length){
     $alphabet = "0123456789azertyuiopmlkjhgfdsqwxcvbnAZERTYUIOPMLKJHGFDSQWXCVBN";
-    return substr(str_shuffle(string-str_repeat($alphabet, $length)),0,$length);
+    $str = str_shuffle($alphabet);
+    $start = 0;
+    return substr($str,$start,$lenght);
+    //return substr(str_shuffle(string-str_repeat($alphabet, $length)),0,$length);
 }
 
 function logged_only(){

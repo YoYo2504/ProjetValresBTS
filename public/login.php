@@ -1,9 +1,8 @@
 <?php
 require '../views/header.php';
 require '../src/bootstrap.php';
-require_once 'bdd.php';
-require 'functions.php';
-reconnect_from_cookie();
+//require 'functions.php';
+//reconnect_from_cookie();
 if(isset($_SESSION['auth'])){
     header('Location: account.php');
     exit();
@@ -13,8 +12,8 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['password'])){
     $req = $pdo2-> prepare('SELECT * FROM utilisateur WHERE (username= :username OR email= :username) AND confirmed_ad IS NOT NULL ');
     $req->execute(['username' => $_POST['username']]);
     $user = $req->fetch();
+    header('Location: index.php');
     if(password_verify($_POST['password'], $user->password)){
-
         $_SESSION['auth']= $user;
         $_SESSION['flash']['success']= 'Vous êtes bien connecté';
         if($_POST['remember']){
@@ -22,7 +21,7 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['password'])){
             $pdo2->prepare('UPDATE utilisateur SET remember_token = ? WHERE id = ?')->execute([$remember_token, $user->id]);
             $setcookie('remember', $user->id . '==' . $remember_token . sha1($user->id . 'aigledesmontagnes'), time() + 60*60 *24*7); //clé pour le cookie secret
         }
-        header('Location: account.php');
+
         exit();
     }else{
         $_SESSION['flash']['danger']= 'Identifiant ou mot de passe incorrecte';
