@@ -31,9 +31,9 @@ class Month{
         if ($year < 1970){
             throw new \Exception("L'année est inférieur à 1970");
         }
-        $month = $month % 12;
-        $this-> month = $month;
-        $this-> year = $year;
+
+        $this->month = $month;
+        $this->year = $year;
     }
 
 
@@ -63,7 +63,7 @@ class Month{
      */
     public function getWeeks() : int {
         $start = $this->getStartingDay();
-        $end =  $start->modify(' +1 month -1 day');
+        $end =  $start->modify('+1 month -1 day');
         $startWeek = intval($start->format('W'));
         $endWeek =intval($end->format('W'));
         if ($endWeek ===1){
@@ -95,8 +95,8 @@ class Month{
         $month = $this->month +1;
         $year=$this->year;
         if($month > 12){
-            $month =1;
-            $year +=1;
+            $month = 1;
+            $year += 1;
         }
         return new Month($month, $year);
     }
@@ -110,8 +110,8 @@ class Month{
         $month = $this->month -1;
         $year=$this->year;
         if($month < 1){
-            $month =12;
-            $year -=1;
+            $month = 12;
+            $year -= 1;
         }
         return new Month($month, $year);
     }
