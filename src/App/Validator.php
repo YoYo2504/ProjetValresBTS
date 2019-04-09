@@ -2,7 +2,7 @@
 namespace App;
 class Validator{
 
-    private $data;
+    private $data=[];
     protected $errors=[];
 
     public function __construct(array $data = [])
@@ -14,9 +14,9 @@ class Validator{
      * @param array $data
      * @return array bool
      */
-    public function validates(array $data) {
+    public function validates($data) {
         $this->errors = array();
-        $this->data =$data;
+        $this->data = $data;
         return $this->errors;
     }
 

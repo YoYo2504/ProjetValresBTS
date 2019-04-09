@@ -16,10 +16,10 @@ if(!$validator->validate('date', 'date')){
 };
 $errors = [];
 if($_SERVER['REQUEST_METHOD']==='POST'){
-    $data = $_POST;
+    $data = $POST;
     $errors = [];
     $validator = new \Calendar\EventValidator();
-    $errors = $validator->validates($_POST);
+    $errors = $validator->validates($POST);
     if(empty($errors)){
         $event = new \Calendar\Events(get_pdo());
         $events = $event->hydrate(new \Calendar\Event(), $data);
