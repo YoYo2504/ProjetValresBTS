@@ -1,8 +1,6 @@
 <?php
-require '../views/header.php';
-require '../src/bootstrap.php';
-//require 'functions.php';
-//reconnect_from_cookie();
+session_start();
+
 if(isset($_SESSION['auth'])){
     header('Location: account.php');
     exit();
@@ -27,6 +25,10 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['password'])){
         $_SESSION['flash']['danger']= 'Identifiant ou mot de passe incorrecte';
     }
 }
+require '../views/header.php';
+require '../src/bootstrap.php';
+require 'functions.php';
+reconnect_from_cookie();
 ?>
 
 <h1>Se connecter</h1>

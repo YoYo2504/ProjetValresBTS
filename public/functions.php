@@ -1,4 +1,5 @@
 <?php
+session_start();
 function debug($variable){
     echo '<pre>' . print_r($variable, true ) . '</pre>';
 }
@@ -12,9 +13,6 @@ function str_random($length){
 }
 
 function logged_only(){
-    if(session_status() == PHP_SESSION_NONE){
-        session_start();
-    }
     if(!isset($_SESSION['auth'])){
         $_SESSION['flash']['danger'] = "Vous n'avez pas le droit d'accéder à la page";
         header('Location: login.php');
@@ -26,9 +24,7 @@ function reconnect_from_cookie(){
 
     if(isset($_COOKIE['remember'])){
 
-        if(session_status() == PHP_SESSION_NONE){
-            session_start();
-        }
+
         if(isset($_COOKIE['remember'])&& !isset($_SESSION['auth'])){
             require_once '../src/db.php';
             if(!isset($pdo2)){
@@ -43,7 +39,7 @@ function reconnect_from_cookie(){
             if($user){
                 $expected = $user_id . '==' . $user->remember_token . sha1($user_id . 'aigledesmontagnes');
                 if($expected == $remember_token){
-                    session_start();
+
                     $_SESSION['auth']= $user;
                     setcookie('remember', $remember_token, time() + 60*60*24*7);
 

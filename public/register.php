@@ -1,7 +1,7 @@
 <?php
 require_once  'functions.php';
 //require_once 'bdd.php';
-session_start();
+
 if(!empty($_POST)){
     require_once '../src/db.php';
     $errors = [];

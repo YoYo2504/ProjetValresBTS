@@ -8,7 +8,7 @@ if(!isset($_POST) && !empty($_POST['email'])){
     $req->execute($_POST['email']);
     $user = $req->fetch();
     if($user){
-        session_start();
+
         $reset_token = str_random(60);
         $pdo2->prepare('UPDATE utilisateur SET reset_token = ?, reset_at = NOW() WHERE id= ?')->execute([$reset_token, $user->id]);
 

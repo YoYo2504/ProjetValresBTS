@@ -1,6 +1,6 @@
 <?php
 namespace Calendar;
-require_once '/Users/yoanfilipe/PhpstormProjects/PlanningFormation/src/bootstrap.php';
+require_once '../src/bootstrap.php';
 //require_once '../bootstrap.php';
 use Couchbase\Exception;
 use PDO;

@@ -6,7 +6,7 @@ require '../src/db.php';
 $req = $pdo->prepare('SELECT * FROM username WHERE id = ?');
 $req->execute([$user_id]);
 $user = $req->fetch();
-session_start();
+
 if($user && $user->confirmation_token == $token){
     $pdo2->prepare('UPDATE username SET confirmation_token = NULL, confirmed_ad = NOW() WHERE id = ?')->execute([$user_id]);
     $_SESSION['flash']['success'] = 'Votre compte a bien été validé';
