@@ -10,7 +10,7 @@ function e404(){
 function dd(...$vars){
     foreach ($vars as $var){
         echo '<pre>';
-        print_r($var);
+       // print_r($var);
         echo '</pre>';
     }
 
@@ -30,6 +30,7 @@ function get_pdo(){
         //PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         $PDO ->query('SET CHARACTER SET UTF8');
         $PDO->query('SET NAMES UTF8');
+        return $PDO;
     }catch (Exception $ex){
         echo 'Exception reçue : ',  $ex->getMessage(), "\n";
     }

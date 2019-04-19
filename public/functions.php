@@ -8,7 +8,7 @@ function str_random($length){
     $alphabet = "0123456789azertyuiopmlkjhgfdsqwxcvbnAZERTYUIOPMLKJHGFDSQWXCVBN";
     $str = str_shuffle($alphabet);
     $start = 0;
-    return substr($str,$start,$lenght);
+    return substr($str,$start,$length);
     //return substr(str_shuffle(string-str_repeat($alphabet, $length)),0,$length);
 }
 

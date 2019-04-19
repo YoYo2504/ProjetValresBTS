@@ -2,8 +2,9 @@
 session_start();
 require '../src/bootstrap.php';
 require_once '../src/App/Validator.php';
+
 //require_once 'bdd.php';
-render('header',['title'=>'Ajouter un évènement']);
+
 
 $data =[
     'date'  => $_GET['date'] ?? date('Y-m-d'),
@@ -17,19 +18,20 @@ if(!$validator->validate('date', 'date')){
 };
 $errors = [];
 if($_SERVER['REQUEST_METHOD']==='POST'){
-    $data = $POST;
+    $data = $_POST;
     $errors = [];
     $validator = new \Calendar\EventValidator();
-    $errors = $validator->validates($POST);
+    $errors = $validator->validates($_POST);
     if(empty($errors)){
-        $event = new \Calendar\Events(get_pdo());
-        $events = $event->hydrate(new \Calendar\Event(), $data);
-        $event->create($event);
-        header('Location: /index?success=1');
+        header('Location: /index?success=1.php');
+        $events = new \Calendar\Events(get_pdo());
+        $event = $events->hydrate(new \Calendar\Event(), $data);
+        $events->create($event);
         exit();
         //dd($errors);
     }
 }
+else {render('header',['title'=>'Ajouter un évènement']);}
 ?>
 
 <div class="container">

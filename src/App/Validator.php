@@ -65,4 +65,8 @@ class Validator{
         }
         return false;
     }
+
+    public function afterTime(string $startField, string $endField){
+
+    }
 }

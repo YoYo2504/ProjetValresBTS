@@ -38,7 +38,7 @@ const PORT='3302';
         }catch (Exception $ex){
             echo 'Exception reçue : ',  $ex->getMessage(), "\n";
         }
-        $sql = "SELECT * FROM Events WHERE startEvent BETWEEN '{$start->format('Y-m-d 00:00:00')}' AND '{$end->format('Y-m-d 23:59:59')}' ORDER BY startEvent ASC";
+        $sql = "SELECT * FROM events WHERE startEvent BETWEEN '{$start->format('Y-m-d 00:00:00')}' AND '{$end->format('Y-m-d 23:59:59')}' ORDER BY startEvent ASC";
         //var_dump($sql);
         $statement = $PDO->query($sql);
         $results =$statement->fetchAll();
@@ -110,8 +110,8 @@ AND {$end->format('Y-m-d 23:59:59')} ORDER BY startEvent ASC";
     public function hydrate(Event $event, array $data){
         $event->setDescriptionName($data['name']);
         $event->setDescription($data['description']);
-        $event->setStartEvent(\DateTimeImmutable::createFromFormat('Y-m-d H-i', $data['date'] . ' ' . $data['start'])->format('Y-m-d H:i:s'));
-        $event->setEndEvent(\DateTimeImmutable::createFromFormat('Y-m-d H-i', $data['date'] . ' ' . $data['end'])->format('Y-m-d H:i:s'));
+        $event->setStartEvent(\DateTimeImmutable::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['start'])->format('Y-m-d H:i:s'));
+        $event->setEndEvent(\DateTimeImmutable::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['end'])->format('Y-m-d H:i:s'));
         return $event;
     }
 
@@ -121,6 +121,7 @@ AND {$end->format('Y-m-d 23:59:59')} ORDER BY startEvent ASC";
      * @return bool
      */
     public function create(Event $event): bool{
+        //var_dump(get_pdo());
         $statement = $this->pdo->prepare('INSERT INTO events (descriptionName, description, startEvent, endEvent) VALUES (?, ?, ?, ?)');
         $statement->execute([
             $event->getDescriptionName(),
@@ -128,6 +129,7 @@ AND {$end->format('Y-m-d 23:59:59')} ORDER BY startEvent ASC";
             $event->getStartEvent()->format('Y-m-d H-i-s'),
             $event->getEndEvent()->format('Y-m-d H-i-s'),
         ]);
+        return true;
     }
 
     /**
@@ -144,6 +146,7 @@ AND {$end->format('Y-m-d 23:59:59')} ORDER BY startEvent ASC";
             $event->getEndEvent()->format('Y-m-d H-i-s'),
             $event->getId()
         ]);
+
     }
 
     /**

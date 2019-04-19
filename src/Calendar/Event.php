@@ -48,4 +48,12 @@ class Event{
         $this->endEvent=$endEvent ;
     }
 
+    public function setEndEvent($endEvent){
+        $this->endEvent=$endEvent ;
+    }
+
+    public function setStartEvent($startEvent){
+        $this->startEvent = $startEvent;
+    }
+
 }
