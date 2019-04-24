@@ -16,15 +16,15 @@ try{
 render('header', ['title'=> $event->getDescriptionName]);
 ?>
 
-<h1><?= h($event->getDescriptionName());?> </h1>
+<h1><?= h($event['descriptionName']);?> </h1><br>
 
 <ul>
-    <li>Date: <?= $event->getStartEvent()->format('d/m/Y');?></li>
-    <li>Heure de début: <?= $event->getStartEvent()->format('H:i');?></li>
-    <li>Heure de fin: <?= $event->getEndEvent()->format('H:i');?></li>
+    <li>Date: <?= (new DateTime($event['startEvent']))->format('d/m/Y');?></li>
+    <li>Heure de début: <?= (new DateTime($event['startEvent']))->format('H:i');?></li>
+    <li>Heure de fin: <?= (new DateTime($event['endEvent']))->format('H:i');?></li>
     <li>
         Description:<br>
-        <?= h($event->getDescription());?>
+        <?= h($event['description']);?>
     </li>
 </ul>
 <?php require '../views/footer.php';?>

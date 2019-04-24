@@ -30,40 +30,25 @@ const PORT='3302';
      */
     public function getEventsBetween (\DateTimeInterface $start, \DateTimeInterface $end): array {
         try{
-            $PDO = new PDO('mysql:dbname=' . NAME . ';host=' . SERVER .';port='.PORT,USERNAME, PASS);
-            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            //PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC;
+
+            $PDO = new PDO('mysql:dbname=' . NAME . ';host=' . SERVER .';port='.PORT,USERNAME, PASS, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            ]);
+            //$PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            //$PDO->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $PDO->query('SET CHARACTER SET UTF8');
             $PDO->query('SET NAMES UTF8');
         }catch (Exception $ex){
             echo 'Exception reçue : ',  $ex->getMessage(), "\n";
         }
         $sql = "SELECT * FROM events WHERE startEvent BETWEEN '{$start->format('Y-m-d 00:00:00')}' AND '{$end->format('Y-m-d 23:59:59')}' ORDER BY startEvent ASC";
-        //var_dump($sql);
         $statement = $PDO->query($sql);
         $results =$statement->fetchAll();
         return $results;
     }
 
-    /**
-     * Récupère les évènement commençant entre 2 dates
-     * @param \DateTimeInterface $start
-     * @param \DateTimeInterface $end
-     * @return array
-     */
-    //AVANT
-    /*public function getEventsBetween (\DateTimeInterface $start, \DateTimeInterface $end): array {
-        $pdo = new \PDO('mysql:host=localhost;dbname=planningFormation,charset=utf8', 'root', 'YoYo250497', [
-            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-        ]);
-        $sql = "SELECT * FROM Events WHERE startEvent BETWEEN {$start->format('Y-m-d 00:00:00')}
-AND {$end->format('Y-m-d 23:59:59')} ORDER BY startEvent ASC";
-        var_dump($sql);
-        $statement = $this->pdo->query($sql);
-        $results =$statement->fetchAll();
-        return $results;
-    }*/
+
 
     /**
      * Récupère les évènement commençant entre 2 dates indexé par jour
@@ -75,8 +60,8 @@ AND {$end->format('Y-m-d 23:59:59')} ORDER BY startEvent ASC";
         $events = $this->getEventsBetween($start,$end);
         $days = [];
         foreach ($events as $event){
-            $date = explode(' ', $event['start'])[0];
-            if(isset($days[$date])){
+            $date = explode(' ',$event['startEvent'])[0];
+            if(!isset($days[$date])){
                 $days[$date] = [$event];
             }else{
                 $days[$date][] = $event ;
@@ -91,10 +76,10 @@ AND {$end->format('Y-m-d 23:59:59')} ORDER BY startEvent ASC";
      * @return Event
      * @throws \Exception
      */
-    public function find (int $id): Event {
-        require 'Event.php';
-        $statement = $this->pdo->query("SELECT * FROM Events WHERE id = $id LIMIT 1");
-        $statement->setFetchMode(PDO::FETCH_CLASS, \Calendar\Event::class);
+    public function find (int $id): array {
+       // require 'Event.php';
+        $statement = $this->pdo->query("SELECT * FROM events WHERE id = $id LIMIT 1");
+        $statement->setFetchMode(PDO::FETCH_CLASS, Calendar\Event::class);
         $result= $statement->fetch();
         if ($result === false){
             throw new \Exception('Aucun résultat n\'a été trouvé');
@@ -121,7 +106,6 @@ AND {$end->format('Y-m-d 23:59:59')} ORDER BY startEvent ASC";
      * @return bool
      */
     public function create(Event $event): bool{
-        //var_dump(get_pdo());
         $statement = $this->pdo->prepare('INSERT INTO events (descriptionName, description, startEvent, endEvent) VALUES (?, ?, ?, ?)');
         $statement->execute([
             $event->getDescriptionName(),
