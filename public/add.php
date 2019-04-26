@@ -52,7 +52,7 @@ else {render('header',['title'=>'Ajouter un évènement']);}
             <div class="alert alert-danger">
                 Merci de vous connecter pour ajouter une réservation
             </div>
-        <?endif;?>
+        <?php endif;?>
 
     </form>
 </div>

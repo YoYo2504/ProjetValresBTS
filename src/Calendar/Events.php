@@ -16,11 +16,17 @@ class Events {
     }
 
 
-const SERVER = '127.0.0.1';
-const NAME ='ProjetValres';
-const USERNAME = 'epsi';
-const PASS='rootroot';
-const PORT='3302';
+//const SERVER = '127.0.0.1';
+//const NAME ='ProjetValres';
+//const USERNAME = 'epsi';
+//const PASS='rootroot';
+//const PORT='3302';
+
+const SERVER = '169.254.7.108';
+const NAME = 'ProjetValres';
+const USERNAME = 'root';
+const PASS = 'rootroot';
+const PORT = 3306;
 
     /**
      * Récupère les évènement commençant entre 2 dates
@@ -35,10 +41,11 @@ const PORT='3302';
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ]);
-            //$PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            //$PDO->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+//            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//            $PDO->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $PDO->query('SET CHARACTER SET UTF8');
             $PDO->query('SET NAMES UTF8');
+            
         }catch (Exception $ex){
             echo 'Exception reçue : ',  $ex->getMessage(), "\n";
         }

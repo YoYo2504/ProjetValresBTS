@@ -16,11 +16,17 @@ function dd(...$vars){
 
 }
 
-define('SERVER', '127.0.0.1');
+//define('SERVER', '127.0.0.1');
+//define('NAME', 'ProjetValres');
+//define('USERNAME', 'epsi');
+//define('PASS', 'rootroot');
+//define('PORT', 3302);
+
+define('SERVER', '169.254.7.108');
 define('NAME', 'ProjetValres');
-define('USERNAME', 'epsi');
+define('USERNAME', 'root');
 define('PASS', 'rootroot');
-define('PORT', 3302);
+define('PORT', 3306);
 
 // ne sert à rien ??
 function get_pdo(){
