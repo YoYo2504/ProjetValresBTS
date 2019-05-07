@@ -12,10 +12,11 @@
 <body>
 <nav class="navbar navbar-dark bg-primary mb-3">
     <a class="btn btn-primary" href="/index.php">Projet VALRES M2L</a>
-    <a class="btn btn-primary" href="/search.php">Rechercher un évènement</a>
+    <a class="btn btn-primary" href="/search.php">Rechercher</a>
     <?php if(isset($_SESSION['auth'])): ?>
         <a class="btn btn-primary" href="/account.php">Mon compte</a>
         <a class="btn btn-primary" href="/logout.php">Se déconnecter</a>
+        <p class="te">Bonjour <?= $_SESSION['auth']->username; ?></p>
     <?php else :?>
         <a class="btn btn-primary" href="/register.php">S'inscrire</a>
         <a class="btn btn-primary" href="/login.php">Se connecter</a>
