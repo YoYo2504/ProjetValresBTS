@@ -1,4 +1,5 @@
 <?php
+session_start();
 //require '../views/header.php';
 require 'functions.php';
 require '../src/bootstrap.php';

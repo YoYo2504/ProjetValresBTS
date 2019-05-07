@@ -16,11 +16,11 @@ class Event{
         return $this->id;
     }
 
-    public function  getDescriptionName(): string {
+    public function  getDescriptionName(){
         return $this->descriptionName;
     }
 
-    public function  getDescription(): string{
+    public function  getDescription(){
         return $this->description ?? '';
     }
 
@@ -32,19 +32,19 @@ class Event{
         return new \DateTimeImmutable($this->endEvent);
     }
 
-    public function setDescriptionName(string $descriptionName){
+    public function setDescriptionName($descriptionName){
         $this->descriptionName =$descriptionName ;
     }
 
-    public function setDescription(string $description){
+    public function setDescription($description){
         $this->description=$description ;
     }
 
-    public function setStart(string $startEvent){
+    public function setStart($startEvent){
         $this->startEvent = $startEvent;
     }
 
-    public function setEnd(string $endEvent){
+    public function setEnd($endEvent){
         $this->endEvent=$endEvent ;
     }
 

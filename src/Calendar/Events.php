@@ -115,37 +115,4 @@ const PORT='3302';
         ]);
         return true;
     }
-
-    /**
-     * Met à jour un évènement au niveau de la bdd
-     * @param Event $event
-     * @return bool
-     */
-    public function update(Event $event): bool{
-        $statement = $this->pdo->prepare('UPDATE events SET descriptionName = ?, description = ?, startEvent = ?, endEvent = ? WHERE id =?');
-        $statement->execute([
-            $event->getDescriptionName(),
-            $event->getDescription(),
-            $event->getStartEvent()->format('Y-m-d H-i-s'),
-            $event->getEndEvent()->format('Y-m-d H-i-s'),
-            $event->getId()
-        ]);
-
-    }
-
-    /**
-     * TODO : Supprime un évènement
-     * @param Event $event
-     * @return bool
-     */
-    public function delete(Event $event):bool{
-        $statement = $this->pdo->prepare('DELETE FROM events WHERE descriptionName = ?, description = ?, startEvent = ?, endEvent = ? id =?');
-        $statement->execute([
-            $event->getDescriptionName(),
-            $event->getDescription(),
-            $event->getStartEvent()->format('Y-m-d H-i-s'),
-            $event->getEndEvent()->format('Y-m-d H-i-s'),
-            $event->getId()
-        ]);
-    }
 }

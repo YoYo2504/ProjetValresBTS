@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $user_id = $_GET['id'];
 $token =$_GET['token'];
 require '../src/db.php';

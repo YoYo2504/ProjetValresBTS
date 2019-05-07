@@ -3,9 +3,6 @@ session_start();
 require '../src/bootstrap.php';
 require_once '../src/App/Validator.php';
 
-//require_once 'bdd.php';
-
-
 $data =[
     'date'  => $_GET['date'] ?? date('Y-m-d'),
     'start' => date('H:i'),

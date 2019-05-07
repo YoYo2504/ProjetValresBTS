@@ -1,4 +1,5 @@
 <?php
+session_start();
 require '../views/header.php';
 require '../src/bootstrap.php';
 //require_once 'bdd.php';
