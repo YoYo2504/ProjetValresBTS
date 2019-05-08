@@ -3,14 +3,18 @@ session_start();
 require_once '../src/bootstrap.php';
 require '../views/header.php';
 require_once '../class/database.php';
+require_once  '../src/Calendar/Event.php';
 
 $pdo = get_pdo();
+$events = new Calendar\Events($pdo);
+
 $allEvents = $pdo->query('SELECT descriptionName, description FROM events ORDER BY id DESC');
 
 if(isset($_GET['search']) AND !empty($_GET['search'])){
     $search = htmlspecialchars($_GET['search']);
     $allEvents = $pdo->query('SELECT descriptionName, description FROM events WHERE CONCAT(description,descriptionName) LIKE "%'.$search.'%" ORDER BY id DESC');
 }
+
 ?>
 <h1>Rechercher un évènement</h1>
 <br>
@@ -23,7 +27,10 @@ if(isset($_GET['search']) AND !empty($_GET['search'])){
     <ul>
         <br>
         <?php while ($s = $allEvents->fetch()){?>
-            <li>Description : <?= $s['descriptionName']?> (description complète: <?= $s['description']?>)</li>
+            <li>Description : <?= $s['descriptionName']?> (description complète: <?= $s['description']?> |
+                Date: <?= (new DateTime($event['startEvent']))->format('d/m/Y');?> |
+                Heure de début: <?= (new DateTime($event['startEvent']))->format('H:i');?> |
+                Heure de fin: <?= (new DateTime($event['endEvent']))->format('H:i');?>)</li>
         <?php }?>
     </ul>
 <? }else{?>

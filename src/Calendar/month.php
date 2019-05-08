@@ -10,6 +10,7 @@ class Month{
 
     public $days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
     private $months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+    public $day;
     public $month;
     public $year;
 
@@ -31,7 +32,6 @@ class Month{
         if ($year < 1970){
             throw new \Exception("L'année est inférieur à 1970");
         }
-
         $this->month = $month;
         $this->year = $year;
     }
@@ -55,6 +55,10 @@ class Month{
     public function toString() : string {
         return $this-> months[$this->month - 1]. ' ' . $this->year;
 
+    }
+
+    public function  toStringDay() : string{
+        return $this->days[$this->day-1]. ' ' . $this->months[$this->month - 1]. ' '. $this->year;
     }
 
     /**
@@ -112,6 +116,36 @@ class Month{
         if($month < 1){
             $month = 12;
             $year -= 1;
+        }
+        return new Month($month, $year);
+    }
+
+    public function nextDay(): Month{
+        $day = $this->day +1;
+        $month = $this->month;
+        $year=$this->year;
+        if($day > 7){
+            $day = 1;
+            $month += 1;
+            if($month > 12){
+                $month = 1;
+                $year += 1;
+            }
+        }
+        return new Month($day, $month, $year);
+    }
+
+    public function previousDay(): Month{
+        $day = $this->day -1;
+        $month = $this->month;
+        $year=$this->year;
+        if($day < 1){
+            $day = 7;
+            $month -= 1;
+            if($month < 1){
+                $month = 12;
+                $year -= 1;
+            }
         }
         return new Month($month, $year);
     }
