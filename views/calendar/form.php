@@ -21,7 +21,7 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
-            <label for="start">Début</label>
+            <label for="start">Début de l'évènement</label>
             <input id="start" type="time" required class="form-control" name="start" placeholder="HH:MM" value="<?= isset($data['start']) ? h($data['start']): '';?>">
             <?php if(isset($errors['start'])):?>
                 <small class="form-text text-muted"><?= $errors['start'];?></small>
@@ -30,7 +30,7 @@
     </div>
     <div class="col-sm-6">
         <div class="form-group">
-            <label for="end">Fin</label>
+            <label for="end">Fin de l'évènement</label>
             <input id="end" type="time" required class="form-control" name="end" placeholder="HH:MM"value="<?= isset($data['end']) ? h($data['end']): '';?>">
         </div>
     </div>

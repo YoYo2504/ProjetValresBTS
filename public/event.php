@@ -28,4 +28,11 @@ render('header', ['title'=> $event->getDescriptionName]);
         <?= h($event['description']);?>
     </li>
 </ul>
+<div>
+    <?php
+    if(isset($_SESSION['auth'])):?>
+        <a href="edit.php?id=<?= $event['id'];?>" class="btn btn-primary">Modifier</a>
+    <? endif;?>
+</div>
+
 <?php require '../views/footer.php';?>

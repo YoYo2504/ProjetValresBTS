@@ -76,7 +76,7 @@ const PORT='3302';
      * @return Event
      * @throws \Exception
      */
-    public function find (int $id): array {
+    public function find (int $id) {
        // require 'Event.php';
         $statement = $this->pdo->query("SELECT * FROM events WHERE id = $id LIMIT 1");
         $statement->setFetchMode(PDO::FETCH_CLASS, Calendar\Event::class);
@@ -112,6 +112,23 @@ const PORT='3302';
             $event->getDescription(),
             $event->getStartEvent()->format('Y-m-d H-i-s'),
             $event->getEndEvent()->format('Y-m-d H-i-s'),
+        ]);
+        return true;
+    }
+
+    /**
+     * Mise à jour d'un évènement
+     * @param Event $event
+     * @return bool
+     */
+    public function update(Event $event){
+        $statement = $this->pdo->prepare('UPDATE events SET descriptionName = ?, startEvent = ?, endEvent = ?, description = ? WHERE id = ?');
+        $statement->execute([
+            $event->getId(),
+            $event->getDescriptionName(),
+            $event->getDescription(),
+            $event->getStartEvent()->format('Y-m-d H:i:s'),
+            $event->getEndEvent()->format('Y-m-d H:i:s')
         ]);
         return true;
     }
