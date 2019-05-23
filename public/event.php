@@ -14,6 +14,7 @@ try{
     e404();
 }
 
+
 render('header', ['title'=> $event->getDescriptionName]);
 ?>
 
@@ -32,6 +33,7 @@ render('header', ['title'=> $event->getDescriptionName]);
     <?php
     if(isset($_SESSION['auth'])):?>
         <a href="edit.php?id=<?= $event['id'];?>" class="btn btn-primary">Modifier</a>
+        <button class="btn btn-primary">Supprimer la réservation</button>
     <? endif;?>
 </div>
 

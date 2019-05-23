@@ -132,4 +132,9 @@ const PORT='3302';
         ]);
         return true;
     }
+
+    public function delete(Event $event){
+        $statement = $this->pdo->prepare('DELETE FROM events WHERE id = ?');
+        $statement->execute($event->getId());
+    }
 }
