@@ -93,6 +93,7 @@ const PORT='3302';
      * @return Event
      */
     public function hydrate(Event $event, array $data){
+        $event->setId($data['id']);
         $event->setDescriptionName($data['name']);
         $event->setDescription($data['description']);
         $event->setStartEvent(\DateTimeImmutable::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['start'])->format('Y-m-d H:i:s'));
@@ -121,15 +122,17 @@ const PORT='3302';
      * @param Event $event
      * @return bool
      */
-    public function update(Event $event){
+    public function update(Event $event): bool{
         $statement = $this->pdo->prepare('UPDATE events SET descriptionName = ?, startEvent = ?, endEvent = ?, description = ? WHERE id = ?');
         $statement->execute([
-            $event->getId(),
             $event->getDescriptionName(),
+            $event->getStartEvent()->format('Y-m-d H-i-s'),
+            $event->getEndEvent()->format('Y-m-d H-i-s'),
             $event->getDescription(),
-            $event->getStartEvent()->format('Y-m-d H:i:s'),
-            $event->getEndEvent()->format('Y-m-d H:i:s')
+            $event->getId()
+
         ]);
+
         return true;
     }
 

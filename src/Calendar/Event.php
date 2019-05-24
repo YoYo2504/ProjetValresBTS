@@ -12,7 +12,7 @@ class Event{
 
     private $endEvent;
 
-    public function  getId(): int{
+    public function  getId(){
         return $this->id;
     }
 
@@ -30,6 +30,10 @@ class Event{
 
     public function  getEndEvent(): \DateTimeInterface{
         return new \DateTimeImmutable($this->endEvent);
+    }
+
+    public function setId($id){
+        $this->id = $id;
     }
 
     public function setDescriptionName($descriptionName){
