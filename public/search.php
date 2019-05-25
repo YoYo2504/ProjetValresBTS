@@ -8,11 +8,11 @@ require_once  '../src/Calendar/Event.php';
 $pdo = get_pdo();
 $events = new Calendar\Events($pdo);
 
-$allEvents = $pdo->query('SELECT descriptionName, description FROM events ORDER BY id DESC');
+$allEvents = $pdo->query('SELECT descriptionName, description, startEvent, endEvent FROM events ORDER BY id DESC');
 
 if(isset($_GET['search']) AND !empty($_GET['search'])){
     $search = htmlspecialchars($_GET['search']);
-    $allEvents = $pdo->query('SELECT descriptionName, description FROM events WHERE CONCAT(description,descriptionName) LIKE "%'.$search.'%" ORDER BY id DESC');
+    $allEvents = $pdo->query('SELECT descriptionName, description, startEvent, endEvent FROM events WHERE CONCAT(description,descriptionName) LIKE "%'.$search.'%" ORDER BY id DESC');
 }
 
 ?>
@@ -28,9 +28,9 @@ if(isset($_GET['search']) AND !empty($_GET['search'])){
         <br>
         <?php while ($s = $allEvents->fetch()){?>
             <li>Description : <?= $s['descriptionName']?> (description complète: <?= $s['description']?> |
-                Date: <?= (new DateTime($event['startEvent']))->format('d/m/Y');?> |
-                Heure de début: <?= (new DateTime($event['startEvent']))->format('H:i');?> |
-                Heure de fin: <?= (new DateTime($event['endEvent']))->format('H:i');?>)</li>
+                Date: <?= (new DateTime($s['startEvent']))->format('d/m/Y');?> |
+                Heure de début: <?= (new DateTime($s['startEvent']))->format('H:i');?> |
+                Heure de fin: <?= (new DateTime($s['endEvent']))->format('H:i');?>)</li>
         <?php }?>
     </ul>
 <? }else{?>

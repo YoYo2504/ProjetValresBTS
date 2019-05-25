@@ -28,8 +28,6 @@ $data = [
 */
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
-    
-
     $data = $_POST;
     $data['id']=$_GET['id'];
     $validator = new \Calendar\EventValidator();
@@ -37,12 +35,9 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
     if(empty($errors)){
         $event = $events->hydrate(new \Calendar\Event(), $data);
-
         $events->update($event);
-        //die();
         header('Location: /index?success=1.php');
         exit();
-        //dd($errors);
     }
 }
 

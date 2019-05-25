@@ -14,6 +14,14 @@ try{
     e404();
 }
 
+if($_SERVER['REQUEST_METHOD']==='POST'){
+    if(isset($_SESSION['auth'])){
+        //$event = $events->hydrate(new \Calendar\Event(), $data);
+        $events->update($event);
+        header('Location: /index?success=1.php');
+        exit();
+    }
+}
 
 render('header', ['title'=> $event->getDescriptionName]);
 ?>
@@ -30,10 +38,13 @@ render('header', ['title'=> $event->getDescriptionName]);
     </li>
 </ul>
 <div>
+
     <?php
     if(isset($_SESSION['auth'])):?>
         <a href="edit.php?id=<?= $event['id'];?>" class="btn btn-primary">Modifier</a>
+    <form action="" method="post" class="form">
         <button class="btn btn-primary">Supprimer la réservation</button>
+    </form>
     <? endif;?>
 </div>
 
