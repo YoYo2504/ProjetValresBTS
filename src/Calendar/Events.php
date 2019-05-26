@@ -94,10 +94,10 @@ const PORT='3302';
      */
     public function hydrate(Event $event, array $data){
         $event->setId($data['id']);
-        $event->setDescriptionName($data['name']);
+        $event->setDescriptionName($data['descriptionName']);
         $event->setDescription($data['description']);
-        $event->setStartEvent(\DateTimeImmutable::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['start'])->format('Y-m-d H:i:s'));
-        $event->setEndEvent(\DateTimeImmutable::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['end'])->format('Y-m-d H:i:s'));
+        $event->setStartEvent(\DateTimeImmutable::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['startEvent'])->format('Y-m-d H:i:s'));
+        $event->setEndEvent(\DateTimeImmutable::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['endEvent'])->format('Y-m-d H:i:s'));
         return $event;
     }
 
@@ -136,8 +136,4 @@ const PORT='3302';
         return true;
     }
 
-    public function delete(Event $event){
-        $statement = $this->pdo->prepare('DELETE FROM events WHERE id = ?');
-        $statement->execute($event->getId());
-    }
 }

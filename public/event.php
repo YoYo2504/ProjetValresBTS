@@ -9,39 +9,46 @@ if (!isset($_GET['id'])){
     header('location: /404.php');
 }
 try{
-    $event = $events->find($_GET['id']);
+    $data = $events->find($_GET['id']);
+
 }catch (\Exception $e){
     e404();
 }
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
-    if(isset($_SESSION['auth'])){
-        //$event = $events->hydrate(new \Calendar\Event(), $data);
-        $events->update($event);
-        header('Location: /index?success=1.php');
-        exit();
-    }
+
+
+    // Suppression de l'évènement à l'aide d'une requête préparée
+    $data = $_POST;
+    $data['id']=$_GET['id'];
+    $var=$data['id'];
+
+    $req = $pdo->prepare('DELETE FROM events WHERE id=" '.$var.'"');
+    $req->execute();
+
+    header('Location: /index?success=1.php');
+
+
 }
 
-render('header', ['title'=> $event->getDescriptionName]);
+render('header', ['title'=> $data->getDescriptionName]);
 ?>
 
-<h1><?= h($event['descriptionName']);?> </h1><br>
+<h1><?= h($data['descriptionName']);?> </h1><br>
 
 <ul>
-    <li>Date: <?= (new DateTime($event['startEvent']))->format('d/m/Y');?></li>
-    <li>Heure de début: <?= (new DateTime($event['startEvent']))->format('H:i');?></li>
-    <li>Heure de fin: <?= (new DateTime($event['endEvent']))->format('H:i');?></li>
+    <li>Date: <?= (new DateTime($data['startEvent']))->format('d/m/Y');?></li>
+    <li>Heure de début: <?= (new DateTime($data['startEvent']))->format('H:i');?></li>
+    <li>Heure de fin: <?= (new DateTime($data['endEvent']))->format('H:i');?></li>
     <li>
         Description:<br>
-        <?= h($event['description']);?>
+        <?= h($data['description']);?>
     </li>
 </ul>
 <div>
-
     <?php
     if(isset($_SESSION['auth'])):?>
-        <a href="edit.php?id=<?= $event['id'];?>" class="btn btn-primary">Modifier</a>
+        <a href="edit.php?id=<?= $data['id'];?>" class="btn btn-primary">Modifier</a>
     <form action="" method="post" class="form">
         <button class="btn btn-primary">Supprimer la réservation</button>
     </form>
