@@ -1,7 +1,6 @@
 <?php
 namespace Calendar;
 require_once '../src/bootstrap.php';
-//require_once '../bootstrap.php';
 use Couchbase\Exception;
 use PDO;
 
@@ -16,11 +15,6 @@ class Events {
     }
 
 
-const SERVER = '127.0.0.1';
-const NAME ='ProjetValres';
-const USERNAME = 'epsi';
-const PASS='rootroot';
-const PORT='3302';
 
     /**
      * Récupère les évènement commençant entre 2 dates
@@ -30,21 +24,12 @@ const PORT='3302';
      */
     public function getEventsBetween (\DateTimeInterface $start, \DateTimeInterface $end): array {
         try{
-
-            $PDO = new PDO('mysql:dbname=' . NAME . ';host=' . SERVER .';port='.PORT,USERNAME, PASS, [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-            ]);
-            //$PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            //$PDO->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $PDO->query('SET CHARACTER SET UTF8');
-            $PDO->query('SET NAMES UTF8');
+            $sql = "SELECT * FROM events WHERE startEvent BETWEEN '{$start->format('Y-m-d 00:00:00')}' AND '{$end->format('Y-m-d 23:59:59')}' ORDER BY startEvent ASC";
+            $statement = $this->pdo->query($sql);
+            $results =$statement->fetchAll();
         }catch (Exception $ex){
             echo 'Exception reçue : ',  $ex->getMessage(), "\n";
         }
-        $sql = "SELECT * FROM events WHERE startEvent BETWEEN '{$start->format('Y-m-d 00:00:00')}' AND '{$end->format('Y-m-d 23:59:59')}' ORDER BY startEvent ASC";
-        $statement = $PDO->query($sql);
-        $results =$statement->fetchAll();
         return $results;
     }
 
@@ -92,12 +77,14 @@ const PORT='3302';
      * @param array $data
      * @return Event
      */
-    public function hydrate(Event $event, array $data){
+    public function hydrate(Event $event, $data){
+
+
         $event->setId($data['id']);
         $event->setDescriptionName($data['descriptionName']);
         $event->setDescription($data['description']);
-        $event->setStartEvent(\DateTimeImmutable::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['startEvent'])->format('Y-m-d H:i:s'));
-        $event->setEndEvent(\DateTimeImmutable::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['endEvent'])->format('Y-m-d H:i:s'));
+        $event->setStartEvent(\DateTimeImmutable::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['start'])->format('Y-m-d H:i:s'));
+        $event->setEndEvent(\DateTimeImmutable::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['end'])->format('Y-m-d H:i:s'));
         return $event;
     }
 
@@ -132,7 +119,6 @@ const PORT='3302';
             $event->getId()
 
         ]);
-
         return true;
     }
 

@@ -2,7 +2,9 @@
 session_start();
 require '../src/bootstrap.php';
 require_once '../src/App/Validator.php';
+require_once '../src/Calendar/Event.php';
 
+$events = new Calendar\Events(get_pdo());
 $data =[
     'date'  => $_GET['date'] ?? date('Y-m-d'),
     'start' => date('H:i'),
@@ -13,19 +15,19 @@ $validator = new \App\Validator($data);
 if(!$validator->validate('date', 'date')){
     $data['date'] = date('Y-m-d');
 };
+
 $errors = [];
+
 if($_SERVER['REQUEST_METHOD']==='POST'){
     $data = $_POST;
-    $errors = [];
     $validator = new \Calendar\EventValidator();
     $errors = $validator->validates($_POST);
     if(empty($errors)){
-        header('Location: /index?success=1.php');
-        $events = new \Calendar\Events(get_pdo());
         $event = $events->hydrate(new \Calendar\Event(), $data);
         $events->create($event);
-        exit();
+        header('Location: /index?success=1.php');
         //dd($errors);
+        exit();
     }
 }
 else {render('header',['title'=>'Ajouter un évènement']);}
@@ -49,7 +51,7 @@ else {render('header',['title'=>'Ajouter un évènement']);}
             <div class="alert alert-danger">
                 Merci de vous connecter pour ajouter une réservation
             </div>
-        <?endif;?>
+        <?php endif;?>
 
     </form>
 </div>

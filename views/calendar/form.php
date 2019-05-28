@@ -2,7 +2,7 @@
     <div class="col-sm-6">
         <div class="form-group">
             <label for="name">Titre</label>
-            <input id="name" type="text" required class="form-control" name="name" value="<?= isset($parameters['data']['descriptionName']) ? h($parameters['data']['descriptionName']): '';?>">
+            <input id="name" type="text" required class="form-control" name="descriptionName" value="<?= isset($parameters['data']['descriptionName']) ? h($parameters['data']['descriptionName']): '';?>">
             <?php if(isset($errors['name'])):?>
                 <small class="form-text text-muted"><?= $errors['name'];?></small>
             <?php endif; ?>
