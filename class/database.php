@@ -2,10 +2,16 @@
 class database{
 
 
-    const SERVER = '127.0.0.1';
-    const NAME ='planningFormation';
-    const USERNAME = 'root';
-    const PASS='YoYo250497';
+//    const SERVER = '127.0.0.1';
+//    const NAME ='planningFormation';
+//    const USERNAME = 'root';
+//    const PASS='YoYo250497';
+    
+const SERVER = '10.229.206.33';
+const NAME ='ProjetValres';
+const USERNAME = 'root';
+const PASS='rootroot';
+const PORT='3306';
 
     public function __construct(){
         try{

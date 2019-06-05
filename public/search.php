@@ -33,8 +33,8 @@ if(isset($_GET['search']) AND !empty($_GET['search'])){
                 Heure de fin: <?= (new DateTime($s['endEvent']))->format('H:i');?>)</li>
         <?php }?>
     </ul>
-<? }else{?>
+<?php }else{?>
     <br>
 <P>Aucun résultat pour : <?= $search ?></P>
-<? }?>
+<?php }?>
 
