@@ -52,7 +52,7 @@ render('header', ['title'=> $data->getDescriptionName]);
     <form action="" method="post" class="form">
         <button class="btn btn-primary">Supprimer la réservation</button>
     </form>
-    <? endif;?>
+    <?php endif;?>
 </div>
 
 <?php require '../views/footer.php';?>
